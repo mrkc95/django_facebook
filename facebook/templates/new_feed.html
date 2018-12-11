@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+​
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <title>뉴스피드</title>
+</head>
+<body>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: #d7d8dc; }
+        .header {
+            background-color: #475d9f;
+            color: #fff;
+            height: 42px;
+            border-bottom: 1px solid #2c3863;
+        }
+        .btn1 {
+            position: absolute;
+            left: 0px;
+        }
+        .search {
+            position: absolute;
+            left: 50px;
+            right: 50px;
+        }
+        .searchbar {
+            border: 1px solid #2c3863;
+            background-color: #323f6b;
+            width: 100%;
+            border-radius: 4px;
+            padding: 6px;
+            margin-top: 7px;
+            color:#ffffff;
+        }
+        .btn2 {
+            position: absolute;
+            right: 0px;
+        }
+        .container {
+            background-color: #d7d8dc;
+        }
+        .footer {
+            border-top: 1px solid #cccccc;
+            background-color: #fafafa;
+            height: 50px;
+            text-align: center;
+            position:fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .tab1 {
+            float: left;
+            width: 25%;
+        }
+        .tab2 {
+            float: left;
+            width: 25%;
+        }
+        .tab3 {
+            float: left;
+            width: 25%;
+        }
+        .tab4 {
+            float: left;
+            width: 25%;
+        }
+        .feed {
+            background-color: #ffffff;
+            border-top: 1px solid #c0c0c0;
+            border-bottom: 1px solid #c0c0c0;
+            margin: 7px 0;
+            padding: 12px;
+        }
+        .date {
+            color: #999;
+            margin-bottom: 10px;
+        }
+        .title {
+            color: #6184dd;
+            font-weight: 600;
+        }
+        .content {
+            margin-top: 5px;
+        }
+        .accessory {
+            border-top: 1px solid #eee;
+            padding-top:10px;
+            margin-top:10px;
+            color: #999;
+            font-size: 14px;
+        }
+        .more {
+            font-size: 14px;
+            color: #6184dddd;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .form_box {
+    background-color: #ffffff;
+    margin: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+.input_field {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 3px 0;
+    font-size: 14px;
+    width: 100%;
+}
+.textarea_field {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 3px 0;
+    font-size: 14px;
+    width: 100%;
+    height: 160px;
+}
+.write_button {
+    background-color: #475d9f;
+    border: 1px solid #323f6b;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-soze: 18px;
+}
+
+
+
+
+
+</style>
+<div class="header">
+    <!-- div로 밑에 a 밑에 img로 묶여있는게 보이시나요? a 태그는 클릭 링크를 거는 태그이고,
+     주소가 /new로 설정되어있어서 클릭하게 되면 127.0.0.1:8000/new 로 연결할 수 있게 됩니다.-->
+    <div class="btn1">
+        <a href="/new"><img src="/static/ic_pencil.jpg" width="22px" style="margin:9px 0 0 13px"></a>
+    </div>
+    <div class="search">
+        <input type="text" class="searchbar" placeholder="Search">
+    </div>
+    <div class="btn2"><img src="/static/ic_info.jpg" width="22px" style="margin:9px 13px 0 0"></div>
+</div>
+<div class="container">
+    <div class="form_box">
+        <!-- form이라는 태그는 열고 닫히는 태그 사이의 있는 모든 input태그의 내용물을
+        싹 모아서 서버로 전송하는 역할을 하는 하는 태그입니다. key=value&key=value 형식으로 전송하는데
+        여기서 key는 input 태그의 name이 들어가고, value는 사용자의 입력값,
+        아무것도 입력되지 않으면 input 태그의 value로 정의해놓은 값을 전달합니다.
+        form태그 안에 별도의 submit(제출) 설정을 해놓지 않으면, form 태그 안에
+        아무 설정도 해놓지 않은 button이 click 액션을 받으면 제출이 발생합니다.
+        csrf_token은 django가 이 요청이 올바른 요청인지 확인하기 위한 랜덤 문자열 토큰이 들어갑니다.
+        (다른 네트워크에서 중간에 가로채거나 변조해서 보내는 등의 방식을 방지합니다.)
+        -->
+        <form method="POST">
+            {% csrf_token %}
+            <h3>게시물 올리기</h3>
+            <input class="input_field" type="text" placeholder="글쓴이의 이름은?" name="author"><br>
+            <input class="input_field" type="password" placeholder="글 비밀번호" name="password"><br>
+            <input class="input_field" type="text" placeholder="제목을 입력해주세요." name="title"><br>
+            <textarea class="textarea_field" placeholder="내용을 입력해주세요." name="content"></textarea><br>
+            <button class="write_button">게시</button>
+        </form>
+    </div>
+</div>
+<div class="footer">
+    <div class="tab1"><img src="/static/ic_feed.jpg" width="22px" style="margin-top: 15px"></div>
+    <div class="tab2"><img src="/static/ic_person.jpg" width="20px" style="margin-top: 14px"></div>
+    <div class="tab3"><img src="/static/ic_globe.jpg" width="20px" style="margin-top: 14px"></div>
+    <div class="tab4"><img src="/static/ic_etc.jpg" width="20px" style="margin-top: 14px"></div>
+</div>
+</body>
+​
+</html>
